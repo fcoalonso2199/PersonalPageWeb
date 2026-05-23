@@ -3,100 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Trabajos | Francisco Alonso</title>
-    <link rel="stylesheet" href="styles/proyectos.css">
-    <!-- Iconos (Opcional, pero recomendado para el diseño) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
+    <title>Mis Proyectos | Francisco Alonso</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
 
-    <!-- Navegación (Asegúrate de que coincida con tu Home) -->
-    <header class="navbar">
-        <div class="logo">FA</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="proyectos.html" class="active">Trabajos</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-        </nav>
+        /* Menú Overlay idéntico al index para mantener consistencia */
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 60;
+            top: 0;
+            right: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            overflow-x: hidden;
+            transition: 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 15%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .overlay a {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 24px;
+            color: #cbd5e1;
+            display: block;
+            transition: 0.3s;
+            margin: 15px 0;
+        }
+
+        .overlay a:hover, .overlay a:focus {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .overlay .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 40px;
+        }
+
+        /* Efecto de carta 3D al hacer hover */
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #3b82f6; /* Borde azul al hacer hover */
+        }
+
+        /* Zoom a la imagen interior */
+        .project-img-container {
+            overflow: hidden;
+        }
+        
+        .project-img {
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        /* Animación de entrada en cascada (Staggered Fade-in) */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .stagger-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Retrasos progresivos para que aparezcan una por una */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+        
+        /* Botón de regreso */
+        .back-btn {
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="myNav" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content flex flex-col items-center justify-center space-y-4">
+            <h3 class="text-white text-2xl font-semibold mb-4 border-b-2 border-slate-500 pb-2">Menú</h3>
+            <a href="index.html" class="flex items-center space-x-3 group text-white hover:text-blue-400">
+                <i class="fas fa-home text-3xl transition-colors"></i>
+                <span class="text-xl tracking-wide">Inicio</span>
+            </a>
+            
+            <h3 class="text-white text-xl font-semibold mt-8 mb-4 border-b border-slate-600 pb-1 w-32 mx-auto">Contacto</h3>
+            <a href="https://www.linkedin.com/in/franciscojavieralonsog" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-3 group">
+                <i class="fab fa-linkedin text-3xl group-hover:text-blue-500 transition-colors"></i>
+                <span class="text-xl tracking-wide">LinkedIn</span>
+            </a>
+            <a href="https://wa.me/5214611773370" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-3 group">
+                <i class="fab fa-whatsapp text-3xl group-hover:text-green-500 transition-colors"></i>
+                <span class="text-xl tracking-wide">WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-40 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Botón Volver -->
+            <a href="index.html" class="back-btn flex items-center text-slate-600 hover:text-blue-600 font-semibold">
+                <i class="fas fa-arrow-left mr-2"></i> Volver al inicio
+            </a>
+            
+            <div class="hamburger-icon text-slate-800 text-2xl p-2 rounded-md hover:bg-slate-100 cursor-pointer" onclick="openNav()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </header>
 
-    <!-- Sección Principal de Proyectos -->
-    <main class="portfolio-container">
-        <header class="portfolio-header">
-            <h1>Mis Proyectos y Trabajos</h1>
-            <p>Una selección de los desarrollos y soluciones web en los que he trabajado recientemente.</p>
-        </header>
-
-        <section class="projects-grid">
-            
-            <!-- Tarjeta de Proyecto 1: Escuela de Idiomas -->
-            <article class="project-card">
-                <div class="project-image">
-                    <!-- Aquí irá una captura de pantalla de la web -->
-                    <div class="image-placeholder"><i class="fa-solid fa-language"></i></div>
-                </div>
-                <div class="project-content">
-                    <span class="project-category">Sitio Web Comercial</span>
-                    <h3>Next Language Academy</h3>
-                    <p>Diseño y desarrollo de la plataforma web oficial para una academia de idiomas, optimizando la experiencia de usuario y la navegación entre servicios.</p>
-                    <div class="project-tags">
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>JavaScript</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn-project" target="_blank">Ver Proyecto <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Tarjeta de Proyecto 2: White Water Rafting -->
-            <article class="project-card">
-                <div class="project-image">
-                    <div class="image-placeholder"><i class="fa-solid fa-water"></i></div>
-                </div>
-                <div class="project-content">
-                    <span class="project-category">Proyecto Web</span>
-                    <h3>White Water Rafting</h3>
-                    <p>Sitio web multi-página enfocado en turismo de aventura. Implementación de maquetación avanzada con CSS externo y optimización de componentes visuales.</p>
-                    <div class="project-tags">
-                        <span>HTML5</span>
-                        <span>CSS Estructurado</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn-project" target="_blank">Ver Código <i class="fa-brands fa-github"></i></a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Tarjeta de Proyecto 3: Back-end / Python -->
-            <article class="project-card">
-                <div class="project-image">
-                    <div class="image-placeholder"><i class="fa-solid fa-gamepad"></i></div>
-                </div>
-                <div class="project-content">
-                    <span class="project-category">Software / Algoritmos</span>
-                    <h3>Recomendador de Videojuegos</h3>
-                    <p>Sistema inteligente en Python que analiza las especificaciones de hardware del usuario (RAM, CPU, GPU) para sugerir juegos compatibles optimizados.</p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>Lógica de Datos</span>
-                    </ajax>
-                    <div class="project-links">
-                        <a href="#" class="btn-project" target="_blank">Ver Repo <i class="fa-brands fa-github"></i></a>
-                    </div>
-                </div>
-            </article>
-
-        </section>
+    <main class="pt-32 pb-10 bg-slate-900 text-white">
+        <div class="container mx-auto px-6 max-w-5xl text-center stagger-item delay-1">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+                Mi <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Portafolio</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                Una colección de mis trabajos, prácticas y soluciones. Desde desarrollo web moderno hasta lógica en C# y Python.
+            </p>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Desarrollado por <a href="https://www.instagram.com/tu_usuario" target="_blank">Francisco Javier Alonso</a></p>
+    <section class="py-20 bg-slate-50 min-h-screen">
+        <div class="container mx-auto px-6 max-w-7xl">
+            
+            <!-- Grid de Proyectos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <!-- Proyecto 1: Web -->
+                <article class="project-card bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 stagger-item delay-1 flex flex-col h-full">
+                    <div class="project-img-container h-56 bg-slate-100 relative group flex items-center justify-center border-b border-slate-200 overflow-hidden">
+                        <div class="absolute inset-0 bg-blue-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-laptop-code text-7xl text-slate-300 project-img"></i>
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Web Dev</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-bold mb-3 text-slate-800">Sitio Web Personal</h3>
+                        <p class="text-slate-600 mb-6 text-sm flex-grow">Desarrollo de portafolio responsivo enfocado en UI/UX. Incluye animaciones personalizadas, menú dinámico y optimización de rendimiento.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">HTML5</span>
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">Tailwind CSS</span>
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">JS</span>
+                        </div>
+                        <a href="index.html" class="inline-flex items-center text-blue-600 font-bold hover:text-blue-800 group mt-auto">
+                            Ver proyecto <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Proyecto 2: C# -->
+                <article class="project-card bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 stagger-item delay-2 flex flex-col h-full">
+                    <div class="project-img-container h-56 bg-slate-100 relative group flex items-center justify-center border-b border-slate-200">
+                        <div class="absolute inset-0 bg-purple-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-window-maximize text-7xl text-slate-300 project-img"></i>
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Software</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-bold mb-3 text-slate-800">Gestor de Inventario</h3>
+                        <p class="text-slate-600 mb-6 text-sm flex-grow">Aplicación de escritorio diseñada para administrar entradas y salidas de productos aplicando programación orientada a objetos.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">C#</span>
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">.NET</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-slate-400 font-bold cursor-not-allowed mt-auto">
+                            <i class="fas fa-lock ml-1 mr-2"></i> En desarrollo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Proyecto 3: Python -->
+                <article class="project-card bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 stagger-item delay-3 flex flex-col h-full">
+                    <div class="project-img-container h-56 bg-slate-100 relative group flex items-center justify-center border-b border-slate-200">
+                        <div class="absolute inset-0 bg-yellow-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-terminal text-7xl text-slate-300 project-img"></i>
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Scripting</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-bold mb-3 text-slate-800">Automatización de Datos</h3>
+                        <p class="text-slate-600 mb-6 text-sm flex-grow">Script desarrollado para procesar y organizar grandes volúmenes de datos desde archivos CSV, ahorrando horas de trabajo manual.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">Python</span>
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">Pandas</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-slate-400 font-bold cursor-not-allowed mt-auto">
+                            <i class="fas fa-lock ml-1 mr-2"></i> Próximamente
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Proyecto 4: Electromecánica -->
+                <article class="project-card bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 stagger-item delay-4 flex flex-col h-full">
+                    <div class="project-img-container h-56 bg-slate-100 relative group flex items-center justify-center border-b border-slate-200">
+                        <div class="absolute inset-0 bg-red-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-cogs text-7xl text-slate-300 project-img"></i>
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Hardware</span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-bold mb-3 text-slate-800">Mantenimiento de Sistemas</h3>
+                        <p class="text-slate-600 mb-6 text-sm flex-grow">Aplicación de protocolos de reparación y mantenimiento preventivo en equipos electrónicos e instalaciones eléctricas.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">Electromecánica</span>
+                            <span class="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded">Circuitos</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-slate-400 font-bold cursor-not-allowed mt-auto">
+                            <i class="fas fa-lock ml-1 mr-2"></i> Experiencia Práctica
+                        </a>
+                    </div>
+                </article>
+                
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center border-t border-slate-800">
+        <p>&copy; 2026 Francisco Javier Alonso | Todos los derechos reservados.</p>
     </footer>
 
+    <script>
+        // Funciones del Menú
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+
+        document.getElementById('myNav').addEventListener('click', function(e) {
+            if(e.target === this) {
+                closeNav();
+            }
+        });
+
+        // Intersection Observer para las animaciones de entrada
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Añade la clase 'visible' que dispara la animación en CSS
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const staggerElements = document.querySelectorAll('.stagger-item');
+            staggerElements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
